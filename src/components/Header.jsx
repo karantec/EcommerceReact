@@ -1,31 +1,70 @@
-import React from 'react'
+import React, { useState } from "react";
+import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 
-const Header = () => {
+const Navbar = () => {
+  // State to manage the navbar's visibility
+  const [nav, setNav] = useState(false);
+
+  // Toggle function to handle the navbar's display
+  const handleNav = () => {
+    setNav(!nav);
+  };
+
+  // Array containing navigation items
+  const navItems = [
+    { id: 1, text: "Home" },
+    { id: 2, text: "About" },
+  ];
+
   return (
-    <div>
-<header className="text-gray-600 body-font shadow-lg">
-  <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-    <a className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" classNames="w-10 h-10 text-white p-2 bg-red-500 rounded-full" viewBox="0 0 24 24">
-        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-      </svg>
-      <span className="ml-3 text-xl">Ecommerce</span>
-    </a>
-    <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-      <a className="mr-5 hover:text-gray-900">First Link</a>
-      <a className="mr-5 hover:text-gray-900">Second Link</a>
-      <a className="mr-5 hover:text-gray-900">Third Link</a>
-      <a className="mr-5 hover:text-gray-900">Fourth Link</a>
-    </nav>
-    <button className="inline-flex items-center bg-indigo-500 border-0 py-1 px-3 text-white focus:outline-none hover:bg-indigo-700 rounded text-base mt-4 md:mt-0">Go toCart
-      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
-        <path d="M5 12h14M12 5l7 7-7 7"></path>
-      </svg>
-    </button>
-  </div>
-</header>
-    </div>
-  )
-}
+    <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 flex justify-between items-center h-18 w-full px-4 text-white shadow-lg">
+      {/* Logo */}
+      <h1 className="w-full text-2xl font-bold  text-white italic">
+        Flip-Ecommerce
+      </h1>
 
-export default Header
+      {/* Desktop Navigation */}
+      <ul className="hidden md:flex">
+        {navItems.map((item) => (
+          <li
+            key={item.id}
+            className="p-4 hover:bg-yellow-300 rounded-xl m-2 cursor-pointer duration-300 hover:text-black"
+          >
+            {item.text}
+          </li>
+        ))}
+      </ul>
+
+      {/* Mobile Navigation Icon */}
+      <div onClick={handleNav} className="block md:hidden">
+        {nav ? <AiOutlineClose size={20} /> : <AiOutlineMenu size={20} />}
+      </div>
+
+      {/* Mobile Navigation Menu */}
+      <ul
+        className={
+          nav
+            ? "fixed md:hidden left-0 top-0 w-[60%] h-full border-r border-r-gray-900 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 ease-in-out duration-500"
+            : "ease-in-out w-[60%] duration-500 fixed top-0 bottom-0 left-[-100%]"
+        }
+      >
+        {/* Mobile Logo */}
+        <h1 className="w-full text-3xl font-bold text-yellow-300 m-4">
+          REACT.
+        </h1>
+
+        {/* Mobile Navigation Items */}
+        {navItems.map((item) => (
+          <li
+            key={item.id}
+            className="p-4 border-b rounded-xl hover:bg-yellow-300 duration-300 hover:text-blue-600 cursor-pointer border-gray-600"
+          >
+            {item.text}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default Navbar;
